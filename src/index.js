@@ -436,10 +436,11 @@ function merger(rootSchema, options, totalSchemas) {
   options = defaultsDeep(options, {
     ignoreAdditionalProperties: false,
     resolvers: defaultResolvers,
-    deep: true
+    deep: true,
+    ignoreErrors: false,
   })
 
-  function mergeSchemas(schemas, base, parents) {
+  function mergeSchemasImpl(schemas, base, parents) {
     schemas = cloneDeep(schemas.filter(notUndefined))
     parents = parents || []
     var merged = isPlainObject(base)
@@ -529,6 +530,14 @@ function merger(rootSchema, options, totalSchemas) {
     return merged
   }
 
+  var mergeSchemas = ignoreErrors
+    ? (schemas, base, parents) => {
+        try {
+          return mergeSchemasImpl(schemas, base, parents)
+        } catch (err) {}
+      }
+    : mergeSchemasImpl
+
   var allSchemas = flattenDeep(getAllOf(rootSchema))
   var merged = mergeSchemas(allSchemas)
 
@@ -536,7 +545,16 @@ function merger(rootSchema, options, totalSchemas) {
 }
 
 merger.options = {
-  resolvers: defaultResolvers
+  resolvers: defaultResolvers,
+  throwIncompatibleOnConflict: (path, paths) => {
+    const first = values[0]
+    for (let i = 1; i < values.length; i++) {
+      if (!isEqual(values[i], first)) {
+        throwIncompatible(values, paths)
+      }
+    }
+    return first
+  },
 }
 
 module.exports = merger
