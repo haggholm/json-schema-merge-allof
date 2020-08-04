@@ -437,7 +437,7 @@ function merger(rootSchema, options, totalSchemas) {
     ignoreAdditionalProperties: false,
     resolvers: defaultResolvers,
     deep: true,
-    ignoreErrors: false,
+    ignoreErrors: false
   })
 
   function mergeSchemasImpl(schemas, base, parents) {
@@ -530,12 +530,12 @@ function merger(rootSchema, options, totalSchemas) {
     return merged
   }
 
-  var mergeSchemas = ignoreErrors
+  var mergeSchemas = options.ignoreErrors
     ? (schemas, base, parents) => {
-        try {
-          return mergeSchemasImpl(schemas, base, parents)
-        } catch (err) {}
-      }
+      try {
+        return mergeSchemasImpl(schemas, base, parents)
+      } catch (err) {}
+    }
     : mergeSchemasImpl
 
   var allSchemas = flattenDeep(getAllOf(rootSchema))
@@ -546,7 +546,7 @@ function merger(rootSchema, options, totalSchemas) {
 
 merger.options = {
   resolvers: defaultResolvers,
-  throwIncompatibleOnConflict: (path, paths) => {
+  throwIncompatibleOnConflict: (values, paths) => {
     const first = values[0]
     for (let i = 1; i < values.length; i++) {
       if (!isEqual(values[i], first)) {
@@ -554,7 +554,7 @@ merger.options = {
       }
     }
     return first
-  },
+  }
 }
 
 module.exports = merger
