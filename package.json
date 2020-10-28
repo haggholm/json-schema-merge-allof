@@ -1,6 +1,6 @@
 {
-  "name": "json-schema-merge-allof",
-  "version": "0.6.0",
+  "name": "@haggholm/json-schema-merge-allof",
+  "version": "1.0.0",
   "description": "Simplify your schema by combining allOf into the root schema, safely.",
   "keywords": [
     "json",
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",
+    "@types/deep-freeze": "^0.1.2",
     "@types/eslint": "^7.2.4",
     "@types/eslint-config-prettier": "^6.11.0",
     "@types/eslint-plugin-prettier": "^3.1.0",
@@ -75,5 +76,9 @@
     "prettier": "^2.1.2",
     "sinon": "^4.0.1",
     "typescript": "^4.0.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.com"
   }
 }
