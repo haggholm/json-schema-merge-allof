@@ -31,6 +31,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "develop": "mocha test/specs --recursive --watch",
     "eslint": "eslint src",
+    "prepublish": "tsc",
     "pretest": "tsc",
     "test": "run-s test:*",
     "test:lint": "run-s eslint",
