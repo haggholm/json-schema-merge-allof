@@ -1,6 +1,6 @@
 {
   "name": "@haggholm/json-schema-merge-allof",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simplify your schema by combining allOf into the root schema, safely.",
   "keywords": [
     "json",
